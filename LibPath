@@ -1,0 +1,19 @@
+***************************************************************************************;
+* Program: LibPath                                                                    *;
+* Purpose: Determine the path of a SAS Library                                        *;
+* Usage  : %LibPath(WORK)                                                             *;
+***************************************************************************************;
+
+%macro LibPath(liblist);
+      %local lnum libref path;
+      %put &liblist;
+      %let lnum = 0;
+      %do %while(%qscan(&liblist,&lnum+1,%str(%( %))) ne );
+            %let lnum = %eval(&lnum+1);
+            %put &lnum;
+            %let libref = %qscan(%bquote(&liblist),&lnum,%str(%( %)));
+            %put &libref;
+            %let path = %sysfunc(pathname(&libref));
+            %put &libref &path;
+      %end;
+%mend LibPath;
