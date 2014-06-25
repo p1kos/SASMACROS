@@ -1,0 +1,15 @@
+***************************************************************************************;
+* Program: NOBS                                                                       *;
+* Purpose: Determine the number of observations in a SAS dataaset                     *;
+* tabl   : The table/dataset of which you want the number of observations             *;
+***************************************************************************************;
+
+%MACRO nobs(tabl);
+  %GLOBAL nobs;
+  %LET dsid   = %SYSFUNC(OPEN(&tabl));    
+  %IF &dsid %THEN %DO;                    
+    %LET nobs =%SYSFUNC(ATTRN(&dsid,NOBS));
+    %LET rc   =%SYSFUNC(CLOSE(&dsid));    
+  %END;                                   
+  &nobs;                                  
+%MEND;
