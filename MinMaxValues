@@ -1,0 +1,14 @@
+***************************************************************************************;
+* Program: MinMaxValues                                                               *;
+* Purpose: Determine the minimum and maximum values in a table and store it in a macro*;
+*        : variables                                                                  *;
+* tabl   : Table to query                                                             *;
+* var    : Table variable to query                                                    *;
+***************************************************************************************;
+
+%macro MinMaxValues(tabl=, var=);
+  PROC SQL;
+    SELECT MIN(&var) INTO:min_&var FROM &tabl;
+    SELECT MAX(&var) INTO:max_&var FROM &tabl;
+  QUIT;
+%mend;
