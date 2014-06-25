@@ -6,10 +6,12 @@
 * tabl   : SAS Table name                                                             *;
 * usr    : Userid as registered in Metadata Server                                    *;
 * psw    : Password as encoded with PROC PWENCODE                                     *;
+* MetaSrv: Metadata Server name                                                       *;
+* portNr : Port number of the Metadata server. Tip-Hard code in the macro allocation  *;
 ***************************************************************************************;
-%MACRO register(lib, tabl, usr, psw);
+%MACRO registerTable(lib=, tabl=, usr=, psw=, MetaSrv=, portNr=);
      PROC METALIB;
-          OMR(LIBRARY="&lib" REPNAME="FOUNDATION" PROTOCOL=BRIDGE PORT="8563" METASERVER="metaservernaam" USER="&usr" PASSWORD=&psw);
+          OMR(LIBRARY="&lib" REPNAME="FOUNDATION" PROTOCOL=BRIDGE PORT="&portNr" METASERVER="&MetaSrv" USER="&usr" PASSWORD=&psw);
           UPDATE_RULE=(DELETE);
           SELECT (&tabl);
           REPORT(MATCHING);
