@@ -1,0 +1,17 @@
+***************************************************************************************;
+* Program: RegisterTable                                                              *;
+* Purpose: Register Table in Metadata Server. This may be needed depending on the     *;
+*        : setup of you site                                                          *;
+* lib    : Library name                                                               *;
+* tabl   : SAS Table name                                                             *;
+* usr    : Userid as registered in Metadata Server                                    *;
+* psw    : Password as encoded with PROC PWENCODE                                     *;
+***************************************************************************************;
+%MACRO register(lib, tabl, usr, psw);
+     PROC METALIB;
+          OMR(LIBRARY="&lib" REPNAME="FOUNDATION" PROTOCOL=BRIDGE PORT="8563" METASERVER="metaservernaam" USER="&usr" PASSWORD=&psw);
+          UPDATE_RULE=(DELETE);
+          SELECT (&tabl);
+          REPORT(MATCHING);
+     RUN;
+%MEND;
