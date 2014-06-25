@@ -2,12 +2,18 @@
 * Program: NOBS                                                                       *;
 * Purpose: Determine the number of observations in a SAS dataaset                     *;
 * tabl   : The table/dataset of which you want the number of observations             *;
+* where  : A where clause if required                                                 *;
 * Credit : Thanks to a paper by Russ Tyndall                                          *;
 ***************************************************************************************;
 
-%MACRO nobs(tabl);
+%MACRO nobs(tabl,where);
   %GLOBAL nobs;
-  %LET dsid   = %SYSFUNC(OPEN(&tabl));    
+  %IF &where %%THEN %DO;
+    %LET dsid   = %SYSFUNC(OPEN(&tabl));
+  %END;
+  %ELSE %DO;
+    %LET dsid   = %SYSFUNC(OPEN(&tabl(where=(&where)) ));
+  %END;
   %IF &dsid %THEN %DO;                    
     %LET nobs =%SYSFUNC(ATTRN(&dsid,NOBS));
     %LET rc   =%SYSFUNC(CLOSE(&dsid));    
