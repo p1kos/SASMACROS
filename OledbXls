@@ -1,0 +1,17 @@
+***************************************************************************************;
+* Program: OledbXls                                                                   *;
+* Purpose: Example program to read Excel via OLEDB. This is handy if you do not have  *;
+*        : the SAS ACCESS to PC Files module at your site.                            *;
+***************************************************************************************;
+
+* In this example we specify Excel 8 compatible. For mor information see the website  *;
+* of Microsoft. These parameters and strings are known in OLEDB                       *;
+LIBNAME oledbxls  oledb provider='Microsoft.ACE.OLEDB.12.0' provider_string='Excel 8.0' DATASOURCE='\\url\excel.xls';
+
+* You can read a specific sheet and also start reading from and to a certain row      *;
+data excelds;
+RETAIN x1 f1 x2 f2 x4 f4 x5 f5 x7 f7 x8 f8;
+set oledbxls. 'SHEETNAME'n (FIRSTOBS =9 OBS=121);
+run;
+
+LIBNAME oledbxls CLEAR;
