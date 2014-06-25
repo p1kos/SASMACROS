@@ -1,0 +1,9 @@
+***************************************************************************************;
+* Program: FmtLibs                                                                    *;
+* Purpose: Determine the SASLIBS in the FMTSEARCH path                                *;
+* Usate  : %let fmtsearch=&fmtlibs                                                    *;
+***************************************************************************************;
+
+%macro fmtLibs;
+      %sysfunc(translate(%sysfunc(getoption(fmtsearch)),%str( ),%str(%( %))))
+%mend fmtLibs;
