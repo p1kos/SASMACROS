@@ -1,0 +1,16 @@
+***************************************************************************************;
+* Program: DeleteCube                                                                 *;
+* Purpose: Delete a SAS Cube from the metadata server and physically delete cube      *;
+* CubeName: Name of the Cube to delete as known in the Metadata Server                *;
+* HostName: Metadata Server Host name. tip-Hard code this in the macro allocation     *;
+* PortNr  : Port Number of the server. tip-Hard code this in the macro allocation     *;
+* OlapSchema: Olap Schema of the OLAP Server. tip-Hard code this the macro allocation *;
+***************************************************************************************;
+
+%macro DeleteCube(CubeName=, HostName=, PortNr=, OlapSchema);
+  PROC OLAP CUBE      = "&CubeName" DELETE;
+    METASVR   HOST       = "HostName"
+              PORT       = &PortNr
+              OLAP_SCHEMA= "&OlapSchema";
+  RUN;
+%mend;
