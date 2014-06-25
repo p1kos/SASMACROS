@@ -2,6 +2,7 @@
 * Program: NOBS                                                                       *;
 * Purpose: Determine the number of observations in a SAS dataaset                     *;
 * tabl   : The table/dataset of which you want the number of observations             *;
+* Credit : Thanks to a paper by Russ Tyndall                                          *;
 ***************************************************************************************;
 
 %MACRO nobs(tabl);
