@@ -1,7 +1,7 @@
 ***************************************************************************************;
 * Program: LibPath                                                                    *;
-* Purpose: Determine the path of a SAS Library                                        *;
-* Usage  : %LibPath(WORK)                                                             *;
+* Purpose: Determine the path of one of more SAS Libraries                            *;
+* Usage  : %LibPath(WORK yourWORK myWORK)                                             *;
 ***************************************************************************************;
 
 %macro LibPath(liblist);
