@@ -1,0 +1,16 @@
+***************************************************************************************;
+* Program: notCompressed                                                              *;
+* Purpose: Determine the tables that are not compressed and store them in a table     *;
+***************************************************************************************;
+%macro notCompressed(lib=,tabl=notCompressed);
+    proc sql;
+        create table &tabl as select libname, memname
+        from dictionary.tables
+        where upcase(memtype)='DATA' and upcase(memtype)='DATA' and upcase(compress)='NO'
+        %if &lib ne %then %do;
+        and libname eq "&lib"
+        %end;
+        ;
+    quit;
+%mend;
+%notCompressed;
