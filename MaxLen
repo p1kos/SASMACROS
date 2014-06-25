@@ -1,0 +1,18 @@
+***************************************************************************************;
+* Program: MaxLen                                                                     *;
+* Purpose: Determine the maximum content of a character variable                      *;
+* Tabl   : The table to query                                                         *;
+* var    : The variable to query                                                      *;
+***************************************************************************************;
+%MACRO MaxLen(tabl,var);
+      %GLOBAL maxlen;
+      %LET maxlen=1;
+      DATA _NULL_;
+            RETAIN maxlen 1;
+            SET &tabl;
+            IF LENGTH(&var) GT maxlen THEN DO;
+                  maxlen=LENGTH(&var);
+                  CALL SYMPUTX('maxlen',PUT(maxlen,8.),'G');
+            END;
+      RUN;
+%MEND;
