@@ -8,6 +8,6 @@
 ***************************************************************************************;
 
 %macro fmtlibs ;
-%global fmtlibs;
-%let fmtlibs=%upcase(%sysfunc(compress(%sysfunc(getoption(fmtsearch)),%str(%(%))))); 
+  %global fmtlibs;
+  %let fmtlibs=%upcase(%sysfunc(compress(%sysfunc(getoption(fmtsearch)),%str(%(%))))); 
 %mend fmtlibs;
