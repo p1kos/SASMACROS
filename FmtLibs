@@ -1,7 +1,7 @@
 ***************************************************************************************;
 * Program: FmtLibs                                                                    *;
 * Purpose: Determine the SASLIBS in the FMTSEARCH path                                *;
-* Usate  : %let fmtsearch=&fmtlibs                                                    *;
+* Usage  : %let fmt=%fmtlibs                                                          *;
 ***************************************************************************************;
 
 %macro fmtLibs;
