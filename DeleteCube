@@ -1,8 +1,8 @@
 ***************************************************************************************;
 * Program: DeleteCube                                                                 *;
-* Purpose: Delete a SAS Cube from the metadata server and physically delete cube      *;
 * Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/edit/master/DeleteCube                     *;
+* Purpose: Delete a SAS Cube from the metadata server and physically delete cube      *;
 * &CubeName: Name of the Cube to delete as known in the Metadata Server               *;
 * &HostName: Metadata Server Host name. tip-Hard code this in the macro allocation    *;
 * &PortNr  : Port Number of the server. tip-Hard code this in the macro allocation    *;
