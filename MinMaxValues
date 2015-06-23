@@ -1,5 +1,5 @@
 ***************************************************************************************;
-* Program: MinMaxValues                                                               *;
+* Macro  : MinMaxValues                                                               *;
 * Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/MinMaxValues                   *;
 * Purpose: Determine the minimum and maximum values in a table and store it in a macro*;
@@ -12,6 +12,6 @@
 %macro MinMaxValues(tabl, var);
   %global min_&var max_&var;
   PROC SQL noprint;
-    SELECT MIN(&var), MAX(&var) INTO:min_&var,: max_&var FROM &tabl;
+    SELECT STRIP(PUT(MIN(&var),8.)), STRIP(PUT(MAX(&var),8.)) INTO:min_&var,: max_&var FROM &tabl;
   QUIT;
 %mend;
