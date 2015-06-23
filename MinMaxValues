@@ -1,9 +1,11 @@
 ***************************************************************************************;
 * Program: MinMaxValues                                                               *;
+* Author : Pieter Kirsten                                                             *;
+* GitHub : https://github.com/p1kos/SASTIP/edit/master/MaxLen                         *;
 * Purpose: Determine the minimum and maximum values in a table and store it in a macro*;
 *        : variables                                                                  *;
-* tabl   : Table to query                                                             *;
-* var    : Table variable to query                                                    *;
+* &tabl : Table to query                                                             *;
+* &var  : Table variable to query                                                    *;
 ***************************************************************************************;
 
 %macro MinMaxValues(tabl=, var=);
