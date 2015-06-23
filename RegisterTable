@@ -1,7 +1,7 @@
 ***************************************************************************************;
 * Program: RegisterTable                                                              *;
 * Author : Pieter Kirsten                                                             *;
-* GitHub : https://github.com/p1kos/SASTIP/edit/master/RegisterTable                  *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/RegisterTable                  *;
 * Purpose: Register Table in Metadata Server. This may be needed depending on the     *;
 *        : setup of you site                                                          *;
 * &lib   : Library name                                                               *;
