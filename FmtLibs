@@ -2,10 +2,12 @@
 * Program: FmtLibs                                                                    *;
 * Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/FmtLibs                        *;
-* Purpose: Determine the SASLIBS in the FMTSEARCH path                                *;
-* Usage  : %let fmt=%fmtlibs                                                          *;
+* Purpose: Determine the SASLIBS in the FMTSEARCH path and store it in the fmtlibs    *;
+*        : global macro variable.                                                     *;
+* Usage  : %fmtlibs                                                                   *;
 ***************************************************************************************;
 
-%macro fmtLibs;
-      %sysfunc(translate(%sysfunc(getoption(fmtsearch)),%str( ),%str(%( %))))
-%mend fmtLibs;
+%macro fmtlibs ;
+%global fmtlibs;
+%let fmtlibs=%upcase(%sysfunc(compress(%sysfunc(getoption(fmtsearch)),%str(%(%))))); 
+%mend fmtlibs;
