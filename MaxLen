@@ -1,8 +1,10 @@
 ***************************************************************************************;
 * Program: MaxLen                                                                     *;
+* Author : Pieter Kirsten                                                             *;
+* GitHub : https://github.com/p1kos/SASTIP/edit/master/MaxLen                         *;
 * Purpose: Determine the maximum content of a character variable                      *;
-* Tabl   : The table to query                                                         *;
-* var    : The variable to query                                                      *;
+* &Tabl  : The table to query                                                         *;
+* &var   : The variable to query                                                      *;
 ***************************************************************************************;
 %MACRO MaxLen(tabl,var);
       %GLOBAL maxlen;
