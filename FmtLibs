@@ -1,7 +1,7 @@
 ***************************************************************************************;
 * Program: FmtLibs                                                                    *;
 * Author : Pieter Kirsten                                                             *;
-* GitHub : https://github.com/p1kos/SASTIP/edit/master/DeleteCube                     *;
+* GitHub : https://github.com/p1kos/SASTIP/edit/master/FmtLibs                        *;
 * Purpose: Determine the SASLIBS in the FMTSEARCH path                                *;
 * Usage  : %let fmt=%fmtlibs                                                          *;
 ***************************************************************************************;
