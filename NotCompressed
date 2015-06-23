@@ -6,6 +6,7 @@
 * &lib   : SAS Library to scan for tables that are not compressed                     *;
 * &tabl  : Name of the table to store the not compressed tables.                      *;
 *        : <default value> notCompressed.                                             *;
+* Usage  : %notCompressed(lib=sashelp)                                                *;
 ***************************************************************************************;
 %macro notCompressed(lib=,tabl=notCompressed);
     proc sql;
