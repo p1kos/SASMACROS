@@ -4,13 +4,14 @@
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/MinMaxValues                   *;
 * Purpose: Determine the minimum and maximum values in a table and store it in a macro*;
 *        : variables                                                                  *;
-* &tabl : Table to query                                                              *;
-* &var  : Table variable to query                                                     *;
+* &tabl  : Table to query                                                             *;
+* &var   : Table variable to query                                                    *;
+* Usage  : %MinMaxValues(sashelp.cars,cylinders)                                      *;
 ***************************************************************************************;
 
-%macro MinMaxValues(tabl=, var=);
-  PROC SQL;
-    SELECT MIN(&var) INTO:min_&var FROM &tabl;
-    SELECT MAX(&var) INTO:max_&var FROM &tabl;
+%macro MinMaxValues(tabl, var);
+  %global min_&var max_&var;
+  PROC SQL noprint;
+    SELECT MIN(&var), MAX(&var) INTO:min_&var,: max_&var FROM &tabl;
   QUIT;
 %mend;
