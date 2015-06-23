@@ -1,6 +1,11 @@
 ***************************************************************************************;
 * Program: notCompressed                                                              *;
+* Author : Pieter Kirsten                                                             *;
+* GitHub : https://github.com/p1kos/SASTIP/edit/master/MaxLen                         *;
 * Purpose: Determine the tables that are not compressed and store them in a table     *;
+* &lib   : SAS Library to scan for tables that are not compressed                     *;
+* &tabl  : Name of the table to store the not compressed tables.                      *;
+*        : <default value> notCompressed.                                             *;
 ***************************************************************************************;
 %macro notCompressed(lib=,tabl=notCompressed);
     proc sql;
@@ -13,4 +18,3 @@
         ;
     quit;
 %mend;
-%notCompressed;
