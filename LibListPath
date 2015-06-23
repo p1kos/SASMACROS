@@ -1,0 +1,24 @@
+***************************************************************************************;
+* Program: LibListPath                                                                *;
+* Author : Pieter Kirsten                                                             *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/LibPath                        *;
+* Purpose: Determine the path of one of more SAS Libraries and store the path in a    *;
+*        : global macro variable with the same name as the SAS Library Alias          *;
+*        : A list is also printed to the LOG.                                         *;
+* Usage  : %liblistpath(WORK SASHELP SASUSER);                                        *;
+*        : In this example &WORK, &SASHELP and &SASUSER will be created with the path *;
+*        : contained in each macro variable.                                          *;
+***************************************************************************************;
+
+%macro LibListPath(liblist);
+      %local lnum libref path;
+      %let lnum = 0;
+      %do %while(%qscan(&liblist,&lnum+1,%str(%( %))) ne );
+            %let lnum = %eval(&lnum+1);
+            %let libref = %qscan(%bquote(&liblist),&lnum,%str(%( %)));
+            %let path = %sysfunc(pathname(&libref));
+            %global &libref;
+            %let &libref=&path;
+            %put &libref=&path;
+      %end;
+%mend;
