@@ -1,5 +1,7 @@
 ***************************************************************************************;
 * Program: LibPath                                                                    *;
+* Author : Pieter Kirsten                                                             *;
+* GitHub : https://github.com/p1kos/SASTIP/edit/master/LibPath                        *;
 * Purpose: Determine the path of one of more SAS Libraries                            *;
 * Usage  : %LibPath(WORK yourWORK myWORK)                                             *;
 ***************************************************************************************;
