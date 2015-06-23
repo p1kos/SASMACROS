@@ -6,6 +6,7 @@
 *        : in a global macro variable MaxLen                                          *;
 * &Tabl  : The table to query                                                         *;
 * &var   : The variable to query                                                      *;
+* Usage  : %maxLen(sashelp.cars,DriveTrain);                                          *;
 ***************************************************************************************;
 %MACRO MaxLen(tabl,var);
       %GLOBAL maxlen;
