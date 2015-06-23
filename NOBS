@@ -1,8 +1,10 @@
 ***************************************************************************************;
 * Program: NOBS                                                                       *;
+* Author : Pieter Kirsten                                                             *;
+* GitHub : https://github.com/p1kos/SASTIP/edit/master/MaxLen                         *;
 * Purpose: Determine the number of observations in a SAS dataaset                     *;
-* tabl   : The table/dataset of which you want the number of observations             *;
-* where  : A where clause if required                                                 *;
+* &tabL  : The table/dataset of which you want the number of observations             *;
+* &where : A where clause if required                                                 *;
 * Credit : Thanks to a paper by Russ Tyndall                                          *;
 ***************************************************************************************;
 
