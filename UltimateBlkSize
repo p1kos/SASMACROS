@@ -1,7 +1,7 @@
 ***************************************************************************************;
 * Program: UltimateBlksize                                                            *;
 * Author : Pieter Kirsten                                                             *;
-* GitHub : https://github.com/p1kos/SASTIP/edit/master/UltimateBlksize                *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/UltimateBlkSize
 * Purpose: Determine the ulimate blocksize to be used on a 3390 DASD (direct access   *;
 *        : storage device) on a z-series (mainframe /OS390) machine.                  *;
 *        : The goal is to utilize one track optimally by defining a blocksize that is *;
@@ -20,7 +20,7 @@
 *          Optionally you can also specify OPTIONS FILEBLKSIZE(3390)=half             *;
 ***************************************************************************************;
 
-%MACRO UltimateBlksize(type=,lrecl=);
+%MACRO UltimateBlkSize(type=,lrecl=);
   %IF &type EQ FIXED %THEN %DO;
     %EVAL(%EVAL(27998 / &LRECL) * &LRECL)
   %END;
