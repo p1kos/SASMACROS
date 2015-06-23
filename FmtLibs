@@ -4,10 +4,11 @@
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/FmtLibs                        *;
 * Purpose: Determine the SASLIBS in the FMTSEARCH path and store it in the fmtlibs    *;
 *        : global macro variable.                                                     *;
+* &macvar: Macro variable to create. Default value=fmtlibs                            *;
 * Usage  : %fmtlibs                                                                   *;
 ***************************************************************************************;
 
-%macro fmtlibs;
-  %global fmtlibs;
-  %let fmtlibs=%upcase(%sysfunc(compress(%sysfunc(getoption(fmtsearch)),%str(%(%))))); 
+%macro fmtlibs(macvar=fmtlibs);
+  %global &macvar;
+  %let &macvar=%upcase(%sysfunc(compress(%sysfunc(getoption(fmtsearch)),%str(%(%))))); 
 %mend fmtlibs;
