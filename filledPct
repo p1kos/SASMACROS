@@ -1,0 +1,60 @@
+***************************************************************************************;
+* Macro    :filledPct                                                                 *;
+* Author   :Pieter Kirsten                                                            *;
+* Purpose  :Determine the filled percentage of each variable in the input table.      *;
+*          :Create a output table with the exact same variables as the input.         *;
+*          :The variables are however percentages that indicate how many filled       *;
+*          :values each variable contains.                                            *;
+* Parameters                                                                          *;
+* &inTable :Input Table to analyze.                                                   *;
+* &outTable:Output Table to create with the filled percentages.                       *;
+* &outTrans:Output Transposed Table to create with the filled percentages.            *;
+* Usage    :%filledPct(sashelp.table,outTable)                                        *;
+*                                                                                     *;
+* Date      Author            Description                                             *;
+* 07JUL2015 Pieter Kirsten    Macro created                                           *;
+* 07JAN2016 Pieter Kirsten    Added functionality of PercentFill by Nick Hales.       *;
+***************************************************************************************;
+
+%MACRO filledPct(inTable,outTable,outTrans,Cat,Group);
+    %LOCAL dsid nvars rc;
+    %LET dsid = %SYSFUNC(OPEN(&inTable)); %PUT &=dsid;
+    PROC SQL;
+    CREATE TABLE &outTable. AS
+    SELECT 
+    %IF &dsid = 0 %THEN %DO;
+        %PUT %SYSFUNC(SYSMSG());
+    %END;
+    %ELSE %DO;
+        %IF &Cat. ne %THEN %DO;
+             &Cat. AS _CAT,
+        %END;
+        %LET nvars =%SYSFUNC(attrn(&dsid,NVARS)); %put &=nvars;
+        %DO i=1 %TO &nvars;
+            %IF &i GT 1 %THEN %DO; , %END;
+            1 - (nmiss(%SYSFUNC(varname(&dsid,&i)))/count(*)) as %SYSFUNC(varname(&dsid,&i)) FORMAT=PERCENTN8.2
+        %END;
+        %LET rc = %SYSFUNC(CLOSE(&dsid));
+    %END;
+    FROM &inTable.;
+    QUIT;
+    %IF &outTrans ne %THEN %DO;
+        %IF &Cat. ne %THEN %DO;
+            PROC SORT DATA=&outTable.;
+                BY _CAT;
+            RUN;
+        %END;
+        PROC TRANSPOSE DATA=&outTable.
+                       OUT=&outTrans
+                       NAME=Variable
+                       LABEL=Label
+                       ;
+        %IF &Cat. ne %THEN %DO;
+            BY _CAT;
+        %END;
+        %IF &Group. ne %THEN %DO;
+            ID &Group.;
+        %END;
+        RUN;
+    %END;
+%MEND;
