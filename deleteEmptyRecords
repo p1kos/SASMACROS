@@ -1,0 +1,28 @@
+***************************************************************************************;
+* Macro    :deleteEmptyRecords                                                        *;
+* Purpose  :Delete records where all variables are empty. Variables can be both       *;
+*          :numeric or character                                                      *;
+*          :See Usage Note 36480 for more information about CMISS function.           *;
+* Parameters                                                                          *;
+* &inTable :Specify the input table to check.                                         *;
+* &outTable:Specify the output table to create after empty records are removed.       *;
+* Usage    :%deleteEmptyRecords(sashelp.cars,cars)                                    *;
+* Date      Author            Description                                             *;
+* 07JUL2015 Pieter Kirsten    Create the macro                                        *;
+***************************************************************************************;
+
+%MACRO deleteEmptyRecords(inTable,outTable);
+    * Determine how many variables are in &inTable. *;
+    %LOCAL dsid nvars rc;
+    %LET dsid = %SYSFUNC(OPEN(&inTable));
+    %IF &dsid %THEN %DO;
+        %LET nvars =%SYSFUNC(attrn(&dsid,NVARS));
+        %LET rc = %SYSFUNC(CLOSE(&dsid));
+    %END;
+
+    * If the number of missing variables is equal to the number of variables then the record is dropped *;
+    data &outTable.;
+      set &inTable.;
+      if cmiss(of _all_) LT &nvars;
+    run;
+%MEND;
