@@ -1,0 +1,41 @@
+***************************************************************************************;
+* Program: verifyTeradataFastExport                                                   *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/verifyTeradataFastExport       *;
+* Purpose: Verify that the SAS Access to Teradata (FastExport) are functioning.       *;
+*        : It is assumed that you have read access to the DBC database on Teradata.   *;
+* Usage  :%verifyTeradataAA(server=prod,user=&user,Psw=&pwd_password)                 *;
+* &Server: Teradata Server                                                            *;
+* &User  : Userid on Teradata                                                         *;
+* &Psw   : Password for Userid on Teradata                                            *;
+***************************************************************************************;
+
+%macro verifyTeradataFastExport(
+server=,
+user=,
+Psw=);
+
+* Use SASTRACE to print the SQL statements issued to Teradata and SASTRACELOC to print*;
+* it to the log                                                                       *;
+OPTIONS SASTRACE = ",,,d" SASTRACELOC = SASLOG MSGLEVEL=I;
+
+* Allocate the DBC database. This is a data dictionary database and all Teradata users*;
+* has read access to this database                                                    *;
+* Use DBSLICEPARM to force FastExport processing.                                     *;
+LIBNAME DBC TERADATA  SERVER="&server." SCHEMA='DBC' USER="&user" PASSWORD="&Psw." DBSLICEPARM=ALL;
+
+* SAS verifies that the FastExport can be used. If it can not be used then you will   *;
+* reveive the following error: "ERROR: FastExport either failed before connecting to  *;
+* SAS or timed out before invoking the access module."                                *;
+* If it is not found then it may mean that: *;
+* 1) It is not located, which may mean that the SAS In-Database Add-in was not installed onto Teradata. *;
+* 2) It is not located, which may mean that the SAS In-Database Add-in was installed but not configured. *;
+* 3) It is not lcoated, which may mean that the SAS In-Database Add-in was installed but the authorization was not set correctly. *;
+* 4) It is not located, which may mean that the SAS In-Database Add-in was not installed on Teradata *;
+PROC SQL NOERRORSTOP;
+    CREATE TABLE WORK.Space AS 
+    SELECT *
+    FROM DBC.Databases;
+QUIT;
+
+LIBNAME DBC clear;
+%mend;
