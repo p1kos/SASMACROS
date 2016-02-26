@@ -1,15 +1,11 @@
 ***************************************************************************************;
 * Macro    : ResetSyscc                                                               *;
-* Author   : Pieter Kirsten                                                           *;
 * GitHub   : https://github.com/p1kos/SASTIP/blob/master/DeleteCube                   *;
 * Purpose  : Reset the general system error code. This macro variable is used to      *;
 *          : verify if a program should be run at all. It is important that this      *;
 *          : macro resets the error code if needed.                                   *;
 * Usage    : %let ResetSyscc=Y  (or you can use a SAS Enterprise Prompt)              *;
 *          : %ResetSyscc                                                              *;
-***************************************************************************************;
-* Date      Author            Description                                             *;
-* 01JUL2015 Pieter Kirsten    Creation of macro                                       *;
 ***************************************************************************************;
 
 %macro ResetSyscc;
@@ -21,4 +17,3 @@
         %let ResetSyscc=N;
     %end;
 %mend;
-%ResetSyscc;
