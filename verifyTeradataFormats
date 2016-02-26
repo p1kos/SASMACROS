@@ -2,7 +2,7 @@
 * Program: verifyTeradataFormats                                                      *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/verifyTeradataFormats          *;
 * Purpose: Verify that the SAS Access to Teradata (Formats) are functioning cube      *;
-*        : It is assumed taht you have read access to the DBC database on Teradata.   *;
+*        : It is assumed that you have read access to the DBC database on Teradata.   *;
 * Usage  :%verifyTeradataFormats(server=prod,user=&user,Psw=&pwd_password)            *;
 * &Server: Teradata Server                                                            *;
 * &User  : Userid on Teradata                                                         *;
