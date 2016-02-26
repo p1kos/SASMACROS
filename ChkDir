@@ -3,7 +3,6 @@
 * Purpose  : Check to see if a directory is created. If not then create the directory.*;
 *          : This only works for single level directories                             *;
 * Usage    : %chkdir(/data/Personal Folders/Pieter/lev1)                              *;
-* Parameters                                                                          *;
 * &dir     : specify the directory path to check                                      *;
 ***************************************************************************************;
 
