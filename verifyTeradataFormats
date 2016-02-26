@@ -1,0 +1,54 @@
+***************************************************************************************;
+* Program: verifyTeradataFormats                                                      *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/verifyTeradataFormats          *;
+* Purpose: Verify that the SAS Access to Teradata (Formats) are functioning cube      *;
+*        : It is assumed taht you have read access to the DBC database on Teradata.   *;
+* Usage  :%verifyTeradataFormats(server=prod,user=&user,Psw=&pwd_password)            *;
+* &Server: Teradata Server                                                            *;
+* &User  : Userid on Teradata                                                         *;
+* &Psw   : Password for Userid on Teradata                                            *;
+***************************************************************************************;
+
+%macro verifyTeradataFormats(
+server=,
+user=,
+Psw=);
+
+* Use SASTRACE to print the SQL statements issued to Teradata and SASTRACELOC to print*;
+* it to the log                                                                       *;
+OPTIONS SASTRACE = ",,,d" SASTRACELOC = SASLOG MSGLEVEL=I;
+
+* Print the content of the SQLMAPPUTTO macro variable.                                *;
+* The default is SAS_PUT, but should be equal to the method name created by SAS       *;
+* In-Database add-on in Teradata. If you are unsure then ask the Administrator        *;
+PROC OPTIONS OPTION=SQLMAPPUTTO;
+RUN;
+
+* Allocate the DBC database. This is a data dictionary database and all Teradata users*;
+* has read access to this database                                                    *;
+* Use CAST_OVERHEAD_MAXPERCENT to force casting of SAS Formats to Teradata.           *;
+* This means that SAS will make use of the SAS_PUT function on Teradata.              *;
+* Use DBSLICEPARM to force FastExport processing.                                     *;
+LIBNAME DBC TERADATA  SERVER="&server." SCHEMA='DBC'
+    USER="&user" PASSWORD="&Psw."
+    CAST_OVERHEAD_MAXPERCENT=100;
+
+* Extract data from Teradata and ask Teradata to convert PermSpace to COMMAX32.       *;
+* SAS first verifies that the function COMMAX is installed as a Teradata function.    *;
+* if it not found then you will see the following message: "WARNING: The format COMMAX*;
+* was not located on the database.  In-database processing will proceed without it."  *;
+* Possible causes of it not being found may be                                        *;
+* 1) It is not located, which may mean that the SAS In-Database Add-in was not        *;
+*    installed on Teradata.                                                           *;
+* 2) It is not located, which may mean that the SAS In-Database Add-in was installed  *;
+*    but not configured on Teradata.                                                  *;
+* 3) It is not located, which may mean that the SAS In-Database Add-in was installed  *;
+*    but not configured on SAS.                                                       *;
+* 4) It is not located, which may mean that the SAS In-Database Add-in was installed  *;
+*    but the authorization was not set correctly.                                     *;
+PROC SQL;
+    CREATE TABLE WORK.Space AS 
+    SELECT DISTINCT DatabaseName, put(PermSpace,Commax32.) AS PermSpace
+    FROM DBC.Databases;
+QUIT;
+%mend;
