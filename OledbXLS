@@ -1,6 +1,5 @@
 ***************************************************************************************;
 * Program: OledbXls                                                                   *;
-* Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/OledbXLS                       *;
 * Purpose: Example program to read Excel via OLEDB. This is handy if you do not have  *;
 *        : the SAS ACCESS to PC Files module at your site.                            *;
