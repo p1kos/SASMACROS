@@ -1,6 +1,5 @@
 ***************************************************************************************;
 * Macro  : MaxLen                                                                     *;
-* Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/MaxLen                         *;
 * Purpose: Determine the maximum content of a character variable and store that value *;
 *        : in a global macro variable MaxLen                                          *;
