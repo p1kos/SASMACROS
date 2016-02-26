@@ -1,6 +1,7 @@
 ***************************************************************************************;
 * Macro    :filledPct                                                                 *;
 * Author   :Pieter Kirsten                                                            *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/filledPct                      *;
 * Purpose  :Determine the filled percentage of each variable in the input table.      *;
 *          :Create a output table with the exact same variables as the input.         *;
 *          :The variables are however percentages that indicate how many filled       *;
