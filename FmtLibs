@@ -1,6 +1,5 @@
 ***************************************************************************************;
 * Program: FmtLibs                                                                    *;
-* Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/FmtLibs                        *;
 * Purpose: Determine the SASLIBS in the FMTSEARCH path and store it in the fmtlibs    *;
 *        : global macro variable.                                                     *;
