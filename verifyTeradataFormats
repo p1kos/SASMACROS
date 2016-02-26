@@ -28,10 +28,7 @@ RUN;
 * has read access to this database                                                    *;
 * Use CAST_OVERHEAD_MAXPERCENT to force casting of SAS Formats to Teradata.           *;
 * This means that SAS will make use of the SAS_PUT function on Teradata.              *;
-* Use DBSLICEPARM to force FastExport processing.                                     *;
-LIBNAME DBC TERADATA  SERVER="&server." SCHEMA='DBC'
-    USER="&user" PASSWORD="&Psw."
-    CAST_OVERHEAD_MAXPERCENT=100;
+LIBNAME DBC TERADATA  SERVER="&server." SCHEMA='DBC' USER="&user" PASSWORD="&Psw." CAST_OVERHEAD_MAXPERCENT=100;
 
 * Extract data from Teradata and ask Teradata to convert PermSpace to COMMAX32.       *;
 * SAS first verifies that the function COMMAX is installed as a Teradata function.    *;
