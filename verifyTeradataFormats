@@ -43,7 +43,7 @@ LIBNAME DBC TERADATA  SERVER="&server." SCHEMA='DBC' USER="&user" PASSWORD="&Psw
 *    but not configured on SAS.                                                       *;
 * 4) It is not located, which may mean that the SAS In-Database Add-in was installed  *;
 *    but the authorization was not set correctly.                                     *;
-PROC SQL;
+PROC SQL NOERRORSTOP;
     CREATE TABLE WORK.Space AS 
     SELECT DISTINCT DatabaseName, put(PermSpace,Commax32.) AS PermSpace
     FROM DBC.Databases;
