@@ -7,8 +7,6 @@
 * &inTable :Specify the input table to check.                                         *;
 * &outTable:Specify the output table to create after empty records are removed.       *;
 * Usage    :%deleteEmptyRecords(sashelp.cars,cars)                                    *;
-* Date      Author            Description                                             *;
-* 07JUL2015 Pieter Kirsten    Create the macro                                        *;
 ***************************************************************************************;
 
 %MACRO deleteEmptyRecords(inTable,outTable);
