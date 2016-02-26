@@ -1,0 +1,45 @@
+***************************************************************************************;
+* Program: verifyTeradataAA                                                           *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/verifyTeradataAA               *;
+* Purpose: Verify that the SAS Analytics Accelerator for Teradata is functioning.     *;
+*        : It is assumed that you have read access to the DBC database on Teradata.   *;
+* Usage  :%verifyTeradataAA(server=prod,user=&user,Psw=&pwd_password)                 *;
+* &Server: Teradata Server                                                            *;
+* &User  : Userid on Teradata                                                         *;
+* &Psw   : Password for Userid on Teradata                                            *;
+***************************************************************************************;
+
+%macro verifyTeradataAA(
+server=,
+user=,
+Psw=);
+
+* Use SASTRACE to print the SQL statements issued to Teradata and SASTRACELOC to print*;
+* it to the log                                                                       *;
+OPTIONS SASTRACE = ",,,d" SASTRACELOC = SASLOG MSGLEVEL=I;
+
+* Allocate the DBC database. This is a data dictionary database and all Teradata users*;
+* has read access to this database                                                    *;
+* Use CAST_OVERHEAD_MAXPERCENT to force casting of SAS Formats to Teradata.           *;
+LIBNAME DBC TERADATA  SERVER="&server." SCHEMA='DBC' USER="&user" PASSWORD="&Psw." CAST_OVERHEAD_MAXPERCENT=100;
+
+* By adding a calculation to the frequency procedure you will force SAS to try and    *;
+* execute it via the SAS Analytics Accelerator on Teradata                            *;
+* If there is something wrong with the SAS AA on Teradata it may stop with a error    *;
+* like this: ERROR:  An exception has been encountered.                               *;
+* Possible causes of it not being found may be                                        *;
+* 1) It is not located, which may mean that the SAS AA was not installed on Teradata. *;
+* 2) It is not located, which may mean that the SAS AA was installed on Teradata, but *;
+*    not configured on Teradata.                                                      *;
+* 3) It is not located, which may mean that the SAS AA was installed on Teradata, but *;
+*    not configured on SAS.                                                           *;
+* 4) It is not located, which may mean that the SAS Aa was installed on Teradata, but *;
+*    the authorization was not set correctly.                                         *;
+
+PROC FREQ DATA=dbc.ampusage;
+    TABLES Username*(Cputime DiskIO)/ OUT=frequency ALL MISSING;
+RUN;
+
+LIBNAME DBC clear;
+
+%mend;
