@@ -51,4 +51,7 @@ PROC SQL;
     SELECT DISTINCT DatabaseName, put(PermSpace,Commax32.) AS PermSpace
     FROM DBC.Databases;
 QUIT;
+
+LIBNAME DBC clear;
+
 %mend;
