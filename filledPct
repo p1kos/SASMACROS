@@ -1,6 +1,5 @@
 ***************************************************************************************;
 * Macro    :filledPct                                                                 *;
-* Author   :Pieter Kirsten                                                            *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/filledPct                      *;
 * Purpose  :Determine the filled percentage of each variable in the input table.      *;
 *          :Create a output table with the exact same variables as the input.         *;
@@ -11,10 +10,6 @@
 * &outTable:Output Table to create with the filled percentages.                       *;
 * &outTrans:Output Transposed Table to create with the filled percentages.            *;
 * Usage    :%filledPct(sashelp.table,outTable)                                        *;
-*                                                                                     *;
-* Date      Author            Description                                             *;
-* 07JUL2015 Pieter Kirsten    Macro created                                           *;
-* 07JAN2016 Pieter Kirsten    Added functionality of PercentFill by Nick Hales.       *;
 ***************************************************************************************;
 
 %MACRO filledPct(inTable,outTable,outTrans,Cat,Group);
