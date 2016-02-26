@@ -1,6 +1,5 @@
 ***************************************************************************************;
 * Program: LibListPath                                                                *;
-* Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/LibListPath                    *;
 * Purpose: Determine the path of one of more SAS Libraries and store the path in a    *;
 *        : global macro variable with the same name as the SAS Library Alias          *;
