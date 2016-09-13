@@ -4,15 +4,25 @@
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/NOBS                           *;
 * Purpose: Determine the number of observations in a SAS dataaset                     *;
 * &tabL  : The table/dataset of which you want the number of observations             *;
-* Usage  : %nobs(sashelp.cars)                                                        *;
+* Usage  : %nobs(sashelp.cars,myobs)                                                  *;
+*        : %let myobs=%nobs(sashelp.cars)                                             *;
 * Credit : Thanks to a paper by Russ Tyndall                                          *;
 ***************************************************************************************;
 
-%MACRO nobs(tabl);  
-  %GLOBAL nobs;
-    %LET dsid   = %SYSFUNC(OPEN(&tabl));
-  %IF &dsid %THEN %DO;                    
-    %LET nobs =%SYSFUNC(ATTRN(&dsid,NOBS));
-    %LET rc   =%SYSFUNC(CLOSE(&dsid));    
-  %END;                                                                
+%MACRO nobs(tabl, macvar);
+    %GLOBAL dsid value rc;
+    %LET dsid=%SYSFUNC(OPEN(&tabl,IS));
+
+    %IF &dsid %then
+        %do;
+            %LET value=%SYSFUNC(ATTRN(&dsid,NOBS));
+            %LET rc   =%SYSFUNC(CLOSE(&dsid));
+        %END;
+
+    %IF &macvar NE %THEN
+        %DO;
+            %GLOBAL &macvar;
+            %LET &macvar=&value;
+        %END;
+    %ELSE &value.;
 %MEND;
