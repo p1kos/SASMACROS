@@ -1,0 +1,150 @@
+***************************************************************************************;
+* Program: Find_Differences                                                           *;
+* Purpose:Determine the differences between two datasets.                             *;
+* &BASE_LIB Base (historic) source library                                            *;                       
+* &COMP_LIB Compare (recent) source library                                           *;
+* &BASE_DS  Base (historic) source dataset                                            *;                       
+* &COMP_DS  Compare (recent) source dataset                                           *;
+* &DIFF_DS  Target dataset (output dataset)                                           *;
+* &PK       Primary Key(s)                                                            *;
+* &FIELDS   Field(s) that should be compaired. Default is all fields                  *;
+* Usage    :%Find_Differences(BASE_LIB    =d121115,                                   *;
+*                             COMP_LIB    =d121119,                                   *;
+*                             BASE_DS     =data_20121115,                             *;
+*                             COMP_DS     =data_20121119,                             *;
+*                             DIFF_DS     =data_DIFF,                                 *;
+*                             PK          =uniquekey,                                 *;
+*                             FIELDS      =ALL)                                       *;
+* Credit : Thanks to IT2BIC (Adil Vural) for this code                                *;
+***************************************************************************************;
+
+%MACRO Find_Differences(BASE_LIB    =,
+                        COMP_LIB    =,   
+                        BASE_DS     =,
+                        COMP_DS     =,
+                        DIFF_DS     =,
+                        PK          =,      
+                        FIELDS      =ALL);
+
+%LOCAL OLD_NEW NEW_OLD CURRENT_KEEP_LIST RENAME_LIST RECALL_LIST PRIMKEY_LIST VAR_NO EQUALITY CHAR1;
+
+PROC SQL NOPRINT;
+    CREATE TABLE _COLUMNS AS
+    SELECT NAME,VARNUM
+    FROM DICTIONARY.COLUMNS
+    WHERE UPCASE(LIBNAME)=UPCASE("&BASE_LIB")
+      AND UPCASE(MEMNAME)=UPCASE("&BASE_DS");
+QUIT;
+
+%IF %BQUOTE(&PK) NE %THEN %DO;
+    %LET CHAR1 = %BQUOTE(%SUBSTR(&PK,1,1));
+    %IF %BQUOTE(&CHAR1) = %STR(%') OR %BQUOTE(&CHAR1) = %STR(%")
+    %THEN %LET PK=%UPCASE(&PK);
+    %ELSE %LET PK=%UPCASE("&PK");
+%END;
+
+%IF &FIELDS=ALL %THEN %DO;
+    PROC SQL NOPRINT;
+     SELECT COMPRESS("'"!!UPCASE(NAME)!!"'") INTO: FIELDS SEPARATED BY ' '
+     FROM _COLUMNS
+     ORDER BY VARNUM;
+    QUIT;
+%END; %ELSE %DO;
+    %LET CHAR1 = %BQUOTE(%SUBSTR(&FIELDS,1,1));
+    %IF %BQUOTE(&CHAR1) = %STR(%') OR %BQUOTE(&CHAR1) = %STR(%")
+        %THEN %LET FIELDS=%UPCASE(&FIELDS);
+        %ELSE %LET FIELDS=%UPCASE("&FIELDS");
+%END;
+
+DATA _COLUMNS_;
+    SET _COLUMNS;
+    IF UPCASE(NAME) IN(&PK) THEN PK=1;
+    IF UPCASE(NAME) IN(&FIELDS) THEN FIELDS=1;
+                                ELSE FIELDS=0;
+    NEW_FIELD           ='NEW'!!PUT(_N_,Z4.);
+    OLD_FIELD           =NAME;
+    OLD_NEW             =COMPRESS(OLD_FIELD!!'='!!NEW_FIELD);
+    NEW_OLD             =COMPRESS(NEW_FIELD!!'='!!OLD_FIELD);
+    CURRENT_KEEP_LIST   =NEW_FIELD;
+    RENAME_LIST         =COMPRESS(NEW_FIELD!!'='!!NEW_FIELD!!'_HIS ');
+    RECALL_LIST         =COMPRESS(NEW_FIELD!!'='!!NEW_FIELD!!'_HIS;');
+RUN;
+
+PROC SQL NOPRINT;
+    SELECT OLD_NEW,
+           NEW_OLD,
+           CURRENT_KEEP_LIST,
+           RENAME_LIST,
+           RECALL_LIST 
+    INTO  :OLD_NEW SEPARATED BY ' ',
+          :NEW_OLD SEPARATED BY ' ',
+          :CURRENT_KEEP_LIST SEPARATED BY ' ',
+          :RENAME_LIST SEPARATED BY ' ',
+          :RECALL_LIST SEPARATED BY ' '
+    FROM _COLUMNS_
+    WHERE PK NE 1 AND FIELDS=1
+    ORDER BY VARNUM;
+    SELECT NAME INTO: PRIMKEY_LIST SEPARATED BY ' '
+    FROM _COLUMNS_
+    WHERE PK EQ 1
+    ORDER BY VARNUM;
+QUIT;
+%PUT &=PRIMKEY_LIST;
+
+PROC SORT DATA=&BASE_LIB..&BASE_DS. 
+          OUT =WORK.&BASE_DS (RENAME=(&OLD_NEW));
+ BY &PRIMKEY_LIST;
+RUN;
+
+PROC SORT DATA=&COMP_LIB..&COMP_DS. 
+          OUT =WORK.&COMP_DS (RENAME=(&OLD_NEW));
+ BY &PRIMKEY_LIST;
+RUN;
+
+
+* Compare and save differences *;
+* N- New, Inserted             *;
+* D- Deleted                   *;
+* M- Modificated               *;
+DATA     WORK.&DIFF_DS (KEEP  = &PRIMKEY_LIST &CURRENT_KEEP_LIST STATUS
+                       RENAME=(&NEW_OLD));
+  MERGE WORK.&BASE_DS  (IN=IS_IN_BASE RENAME=(&RENAME_LIST))
+        WORK.&COMP_DS (IN=IS_IN_COMP);
+  BY &PRIMKEY_LIST;
+  IF NOT IS_IN_BASE THEN DO;
+     STATUS = 'N';
+     OUTPUT;
+  END;
+  ELSE IF NOT IS_IN_COMP THEN DO;
+     STATUS = 'D';
+     &RECALL_LIST;
+     OUTPUT;
+  END;
+  * if is_in_comp and is_in_base, check for equality *;
+  ELSE DO;
+     * A priori assumption: equal *;
+     _UNEQUAL_ = 0;
+     %LET VAR_NO = 1;
+     * column = column_hist *;
+     %LET EQUALITY = %SCAN(&RECALL_LIST,&VAR_NO, %STR(;));
+     * 1st variable, if without else *;
+     if not (&EQUALITY) then _unequal_ = 1;
+     * Initialize loop *;
+     %LET VAR_NO = 2;
+     %LET EQUALITY = %SCAN(&RECALL_LIST,&VAR_NO,%STR(;));
+     * Loop over remaining variables *;
+     %DO  %WHILE ( %LENGTH(&EQUALITY) >= 1 );
+          else if not (&EQUALITY) then _unequal_ = 1;
+          %LET VAR_NO = %EVAL(&VAR_NO+1);
+          %LET EQUALITY = %SCAN(&RECALL_LIST,&VAR_NO,%STR(;));
+     %END;
+     * M       - Modificacion      *;
+     * output  - Use recent values *;
+     IF _UNEQUAL_ THEN DO;
+        STATUS = 'M';
+        OUTPUT;
+     END;
+  * if is_in_comp and is_in_base *;
+  END;
+RUN;
+%MEND Find_Differences;
