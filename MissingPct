@@ -1,0 +1,28 @@
+***************************************************************************************;
+* Program: MissingPct                                                                 *;
+* Purpose:Determine the missing percentage of each variable in the input table.       *;
+*        :Create a output table with the exact same variables as the input.           *;
+*        :The variables are however percentages that indicate how many missing        *;
+*        :values each variable contains.                                              *;
+* &inTable :Input Table to analyze.                                                   *;
+* &outTable:Output Table to create with the missing percentages.                      *;
+* Usage    :%missingPct(sashelp.table,outTable)                                       *;
+***************************************************************************************;
+
+%MACRO MissingPct(inTable,outTable);
+    PROC SQL;
+    CREATE TABLE &outTable. AS
+    SELECT 
+    %LOCAL dsid nvars rc;
+    %LET dsid = %SYSFUNC(OPEN(&inTable)); %PUT &=dsid;
+    %IF &dsid %THEN %DO;
+        %LET nvars =%SYSFUNC(attrn(&dsid,NVARS)); %put &=nvars;
+        %DO i=1 %TO &nvars;
+            %IF &i GT 1 %THEN %DO; , %END;
+            nmiss(%SYSFUNC(varname(&dsid,&i)))/count(*) as %SYSFUNC(varname(&dsid,&i)) FORMAT=PERCENTN8.2
+        %END;
+        %LET rc = %SYSFUNC(CLOSE(&dsid));
+    %END;
+    FROM &inTable.;
+    QUIT;
+%MEND;
