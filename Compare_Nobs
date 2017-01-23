@@ -1,5 +1,5 @@
 ***************************************************************************************;
-* Program: COMPARE_NOBS                                                               *;
+* Program: Compare_Nobs                                                               *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/Compare_Nobs                   *;
 * Purpose: Compare 2 tables for equal number of observations.                         *;
 *        : This can be used for making sure you did not have a cartesian product      *;
