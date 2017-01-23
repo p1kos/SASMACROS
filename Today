@@ -1,0 +1,46 @@
+***************************************************************************************;
+* Program:Today                                                                       *;
+* Credit :Thanks to Mark Jordan - http://go.sas.com/jedi for the base code            *;
+* Purpose:Retrieve the current date at moment it is called. Not the &SYSDATE value.   *;
+*        :Display this retrieved date in a desired SAS date format.                   *;
+* &FMT   :Specify !HELP to get a usage note in the log.                               *;
+*        :Specify a date so that you can create the date in the desired format.       *;
+* Usage  :TITLE "Model Review Report Created on %today(worddate.)";                   *;
+***************************************************************************************;
+
+%macro Today(fmt);
+  * Set format to DATE9. default if user did not supply a format *;
+ %if %superq(fmt)= %then %let fmt=date9.;
+ * If the user requests help, supply documentation in the SAS log *;
+ %if %qupcase(%qsubstr(%superq(fmt),1,%sysfunc(MIN(5,%length(%superq(fmt))))))=!HELP %then
+ %do;
+ %let MsgType=NOTE;
+ %PUT ;
+ %PUT &MSGTYPE: &SYSMACRONAME MACRO &MSGTYPE ****************************;
+ %Syntax:
+ %PUT ;
+ %PUT &MSGTYPE- SYNTAX: %NRSTR(%%)&sysmacroname%str(%(<format>%));
+ %PUT &MSGTYPE- format: any valid SAS Date format;
+ %PUT &MSGTYPE- If left blank, date9. format is used;
+ %PUT &MSGTYPE- Use !HELP to produce this syntax help in the SAS log;
+ %PUT ;
+ %PUT &MSGTYPE- Example: ;
+ %PUT &MSGTYPE- %NRSTR(%%)&sysmacroname%str(%(MMDDYY10.%));
+ %PUT &MSGTYPE- %NRSTR(%%)&sysmacroname%str(%(!HELP%));
+ %PUT ;
+ %PUT &MSGTYPE- *********************************************;
+ %PUT ;
+ %RETURN;
+ %end;
+ * Validate FMT is a valid SAS name *;
+ %if %LENGTH(%qsysfunc(compress(%superq(fmt),_.,AD))) %then
+ %do;
+ %let MsgType=ERROR;
+ %PUT ;
+ %PUT &MSGTYPE: &SYSMACRONAME MACRO &MSGTYPE ****************************;
+ %PUT &MSGTYPE- &FMT is not valid as a SAS format name.;
+ %goto Syntax;
+ %end;
+ * Produce today's date in the requested format *;
+ %qsysfunc(strip(%qsysfunc(today(),%superq(fmt))))
+%mend;
