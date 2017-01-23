@@ -1,0 +1,16 @@
+***************************************************************************************;
+* Program: UnixGroup                                                                  *;
+* Purpose: Change the Unix group of a directory from the default readonly to another  *;
+*        : group. In this way other people in that group can access this directory.   *;
+* Usage  : %unixGroup(dir=/data/sasnormal/ample/Personal Folders/Pieter/unixGroup     *;
+* &dir   : specify the directory path to change                                       *;
+* &grp   : change the group depending on the library you are in.                      *;
+* Credit : Thanks to Remco Rijnders for this macro                                    *;
+***************************************************************************************;
+
+%macro unixGroup(dir=,grp=ample);
+   %sysexec umask 002;
+   %sysexec cd &dir.;
+   %sysexec chgrp &grp. .;
+   %sysexec chmod g+s .;
+%mend;
