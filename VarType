@@ -1,0 +1,28 @@
+***************************************************************************************;
+* Program: VarType                                                                    *;
+* Purpose: Returns the variable type of a variable in a SAS table.                    *;
+*        : If it returns C it means it is a character varible.                        *;
+*        : If it returns N it means it is a numeric variable.                         *;
+* Usage  : %LET cylinders=%VARTYPE(sashelp.cars,cylinders)                            *;
+*        : %VARTYPE(sashelp.cars,cylinders,cylmac)                                    *;
+* &dsname: Specify the dataset name that contains the SAS variable you want to check  *;
+* &varname: Specify the variable name that you want to check                          *;
+* &macvar: <Optional Parameter> <Does determine how this macro returns its value      *;
+*        : If you specify a macro variable then a global variable will be created.    *;
+*        : If you do not specify a variable then this macro only returns the value.   *;
+***************************************************************************************;
+%MACRO VarType(dsname,varname,macvar);
+    %LOCAL dsid varnum value rc;
+    %LET dsid = %SYSFUNC(OPEN(&dsname));
+    %IF &dsid %THEN %DO;                    
+        %LET varnum =%SYSFUNC(VARNUM(&dsid,&varname));
+        %LET value =%SYSFUNC(VARTYPE(&dsid,&varnum));
+        %LET rc = %SYSFUNC(CLOSE(&dsid));
+    %END;
+
+    %IF &macvar NE %THEN %DO;
+        %GLOBAL &macvar;
+        %LET &macvar=&value;
+    %END;
+    %ELSE &value.;
+%MEND;
