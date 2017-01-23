@@ -1,0 +1,14 @@
+***************************************************************************************;
+* Program:VerifyTableExist                                                            *;
+* Purpose:Verifies the existence of data set and create a macro variable iTableExist  *;
+* &iTableName Input table of view name.                                               *;
+* Usage    :%verify_table_existence(sashelp.cars)                                     *;
+* Credit : Thanks to Adil Vural for the code                                          *;
+***************************************************************************************;
+%MACRO VerifyTableExist(iTableName);
+   %GLOBAL itableexist;
+   %IF %SYSFUNC(EXIST(&iTableName,DATA)) OR
+       %SYSFUNC(EXIST(&iTableName,VIEW)) %THEN %LET itableexist=Y;  
+                                         %ELSE %LET itableexist=N;  
+   %PUT NOTE: (VerifyTableExist) itableexist(&iTableName) = &itableexist;
+%MEND VerifyTableExist;
