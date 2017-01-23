@@ -1,0 +1,40 @@
+***************************************************************************************;
+* Program: COMPARE_NOBS                                                               *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/Compare_Nobs                   *;
+* Purpose: Compare 2 tables for equal number of observations.                         *;
+*        : This can be used for making sure you did not have a cartesian product      *;
+* Credit : Based on program by Winfred Zwaard                                         *;
+* &DS1   : SAS Table 1 <mandatory>                                                    *;
+* &DS2   : SAS Table 2 <mandatory>                                                    *;
+* Usage  : %compare_nobs(sashelp.cars,sashelp.cars);                                  *;
+***************************************************************************************;
+
+%MACRO COMPARE_NOBS(DS1, DS2, );
+    %GLOBAL DSET NVARS NOBS;
+
+    %LET NOBS1=-1;
+    %LET DSET1=&DS1.;
+    %LET DSID1 = %SYSFUNC(OPEN(&DSET1.));
+
+    %IF &DSID1 %THEN
+    %DO;
+        %LET NOBS1 =%SYSFUNC(ATTRN(&DSID1.,NOBS));
+        %LET RC = %SYSFUNC(CLOSE(&DSID1.));
+    %END;
+    %ELSE %PUT ERROR: OPEN FOR DATA SET &DSET1. FAILED - %SYSFUNC(SYSMSG());
+
+    %LET NOBS2=-1;
+    %LET DSET2=&DS2.;
+    %LET DSID2 = %SYSFUNC(OPEN(&DSET2.));
+
+    %IF &DSID2 %THEN
+    %DO;
+        %LET NOBS2 =%SYSFUNC(ATTRN(&DSID2.,NOBS));
+        %LET RC = %SYSFUNC(CLOSE(&DSID2.));
+    %END;
+    %ELSE %PUT ERROR: OPEN FOR DATA SET &DSET2. FAILED - %SYSFUNC(SYSMSG());
+
+    %IF (&NOBS1. NE &NOBS2.) OR (&NOBS1. EQ -1 AND &NOBS2. EQ -1) %THEN %DO;
+        %PUT ERROR: DIFFERENCE IN NOBS BETWEEN &DSET1. (&NOBS1.) AND &DSET2. (&NOBS2.);
+    %END;
+%MEND;
