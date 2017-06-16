@@ -1,5 +1,6 @@
 ***************************************************************************************;
 * Macro    :deleteEmptyRecords                                                        *;
+* GitHub   :https://github.com/p1kos/SASTIP/edit/master/DeleteEmptyRecords            *;
 * Purpose  :Delete records where all variables are empty. Variables can be both       *;
 *          :numeric or character                                                      *;
 *          :See Usage Note 36480 for more information about CMISS function.           *;
