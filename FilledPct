@@ -1,6 +1,6 @@
 ***************************************************************************************;
-* Macro    :filledPct                                                                 *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/filledPct                      *;
+* Macro    :FilledPct                                                                 *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/FilledPct                      *;
 * Purpose  :Determine the filled percentage of each variable in the input table.      *;
 *          :Create a output table with the exact same variables as the input.         *;
 *          :The variables are however percentages that indicate how many filled       *;
@@ -9,10 +9,10 @@
 * &inTable :Input Table to analyze.                                                   *;
 * &outTable:Output Table to create with the filled percentages.                       *;
 * &outTrans:Output Transposed Table to create with the filled percentages.            *;
-* Usage    :%filledPct(sashelp.table,outTable)                                        *;
+* Usage    :%FilledPct(sashelp.table,outTable)                                        *;
 ***************************************************************************************;
 
-%MACRO filledPct(inTable,outTable,outTrans,Cat,Group);
+%MACRO FilledPct(inTable,outTable,outTrans,Cat,Group);
     %LOCAL dsid nvars rc;
     %LET dsid = %SYSFUNC(OPEN(&inTable)); %PUT &=dsid;
     PROC SQL;
