@@ -1,14 +1,14 @@
 ***************************************************************************************;
-* Program: notCompressed                                                              *;
+* Program: NotCompressed                                                              *;
 * Author : Pieter Kirsten                                                             *;
 * GitHub : https://github.com/p1kos/SASTIP/blob/master/NotCompressed                  *;
 * Purpose: Determine the tables that are not compressed and store them in a table     *;
 * &lib   : SAS Library to scan for tables that are not compressed                     *;
 * &tabl  : Name of the table to store the not compressed tables.                      *;
-*        : <default value> notCompressed.                                             *;
-* Usage  : %notCompressed(lib=sashelp)                                                *;
+*        : <default value> NotCompressed.                                             *;
+* Usage  : %NotCompressed(lib=sashelp)                                                *;
 ***************************************************************************************;
-%macro notCompressed(lib=,tabl=notCompressed);
+%macro NotCompressed(lib=,tabl=NotCompressed);
     proc sql;
         create table &tabl as select libname, memname
         from dictionary.tables
