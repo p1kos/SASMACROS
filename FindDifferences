@@ -1,5 +1,5 @@
 ***************************************************************************************;
-* Program: Find_Differences                                                           *;
+* Program: FindDifferences                                                            *;
 * Purpose:Determine the differences between two datasets.                             *;
 * &BASE_LIB Base (historic) source library                                            *;                       
 * &COMP_LIB Compare (recent) source library                                           *;
@@ -8,23 +8,23 @@
 * &DIFF_DS  Target dataset (output dataset)                                           *;
 * &PK       Primary Key(s)                                                            *;
 * &FIELDS   Field(s) that should be compaired. Default is all fields                  *;
-* Usage    :%Find_Differences(BASE_LIB    =d121115,                                   *;
-*                             COMP_LIB    =d121119,                                   *;
-*                             BASE_DS     =data_20121115,                             *;
-*                             COMP_DS     =data_20121119,                             *;
-*                             DIFF_DS     =data_DIFF,                                 *;
-*                             PK          =uniquekey,                                 *;
-*                             FIELDS      =ALL)                                       *;
+* Usage    :%FindDifferences(BASE_LIB    =d121115,                                    *;
+*                            COMP_LIB    =d121119,                                    *;
+*                            BASE_DS     =data_20121115,                              *;
+*                            COMP_DS     =data_20121119,                              *;
+*                            DIFF_DS     =data_DIFF,                                  *;
+*                            PK          =uniquekey,                                  *;
+*                            FIELDS      =ALL)                                        *;
 * Credit : Thanks to IT2BIC (Adil Vural) for this code                                *;
 ***************************************************************************************;
 
-%MACRO Find_Differences(BASE_LIB    =,
-                        COMP_LIB    =,   
-                        BASE_DS     =,
-                        COMP_DS     =,
-                        DIFF_DS     =,
-                        PK          =,      
-                        FIELDS      =ALL);
+%MACRO FindDifferences(BASE_LIB    =,
+                       COMP_LIB    =,   
+                       BASE_DS     =,
+                       COMP_DS     =,
+                       DIFF_DS     =,
+                       PK          =,      
+                       FIELDS      =ALL);
 
 %LOCAL OLD_NEW NEW_OLD CURRENT_KEEP_LIST RENAME_LIST RECALL_LIST PRIMKEY_LIST VAR_NO EQUALITY CHAR1;
 
@@ -147,4 +147,4 @@ DATA     WORK.&DIFF_DS (KEEP  = &PRIMKEY_LIST &CURRENT_KEEP_LIST STATUS
   * if is_in_comp and is_in_base *;
   END;
 RUN;
-%MEND Find_Differences;
+%MEND FindDifferences;
