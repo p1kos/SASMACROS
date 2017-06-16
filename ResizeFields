@@ -1,10 +1,11 @@
 ***************************************************************************************;
 * Program: ResizeFields                                                               *;
-* Credit : Thanks to IT2BIC (Adil Vural) for the base code                            *;
+* GitHub : https://github.com/p1kos/SASTIP/edit/master/ResizeFields                   *;
 * Purpose:Change character fields to the maximum needed length.                       *;
 * Usage  :%ReSizenFields(BronData=sashelp.cars,DoelData=work.cars);                   *;
 * &BronData:Input Table to analyze                                                    *;
 * &DoelData:Output Table to create with changed lengths                               *;
+* Credit : Thanks to IT2BIC (Adil Vural) for the base code                            *;
 ***************************************************************************************;
 
 %macro ResizeFields (BronData=, DoelData=);
