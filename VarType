@@ -1,5 +1,6 @@
 ***************************************************************************************;
 * Program: VarType                                                                    *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/VarType                        *;
 * Purpose: Returns the variable type of a variable in a SAS table.                    *;
 *        : If it returns C it means it is a character varible.                        *;
 *        : If it returns N it means it is a numeric variable.                         *;
