@@ -1,5 +1,6 @@
 ***************************************************************************************;
 * Program: FindDifferences                                                            *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/FindDifferences                *;
 * Purpose:Determine the differences between two datasets.                             *;
 * &BASE_LIB Base (historic) source library                                            *;                       
 * &COMP_LIB Compare (recent) source library                                           *;
