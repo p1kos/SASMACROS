@@ -65,7 +65,7 @@
   %end;
 
   %if (%superq(BronData) ne %superq(DoelData)) or &needed %then %do;
-  options VARLENCHK=nowarn;
+    options VARLENCHK=nowarn;
     data &DoelData
          ;
       retain %do i=1 %to &nvars; 
@@ -82,11 +82,12 @@
              %end;;
         set &BronData;
     run;
-	proc sql; drop table _contnt_; quit;
-  options VARLENCHK=WARN;
+    options VARLENCHK=WARN;
   %end;
   %else %do;
   %end;
-
+  proc sql;
+     drop table _contnt_; 
+  quit;
   %ByeBye:
 %mend ResizeFields;
