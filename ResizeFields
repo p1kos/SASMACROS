@@ -42,8 +42,9 @@
       else call symput ('typ'||left(_n_), ' ');
     call symput ('len'||left(_n_), length);
   run;
-
+  
   proc sql noprint;
+    drop table _contnt_;   
     select
     0
     %do i=1 %to &nvars;
@@ -86,8 +87,5 @@
   %end;
   %else %do;
   %end;
-  proc sql;
-     drop table _contnt_; 
-  quit;
   %ByeBye:
 %mend ResizeFields;
