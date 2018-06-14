@@ -1,0 +1,50 @@
+***************************************************************************************;
+* Program:DirFiles                                                                    *;
+* GitHub :https://github.com/p1kos/SASTIP/blob/master/DirFiles                        *;
+* Purpose:Retrieve the list of files or directories in a directory.                   *;
+*        :Does not need PIPE or X command authorization.                              *;
+* Usage  :%DirFiles(/data/Personal Folders/Pieter/lev1)                               *;
+* &dir   :specify the directory path to check                                         *;
+* &maccnt:Default=filecount. Macro variable to create that contains the number of     *;
+*        :files found. e.g. FileCount=2                                               *;
+* &macvar:Default=filename. Macro variable series that will be created that contain   *;
+*        :the file name. e.g. filename1=a.txt filename2=b.txt                         *;
+***************************************************************************************;
+%macro DirFiles(dir,maccnt=filecount,macvar=filename);
+   * Set the macro variables to local that you are going to create *;
+   %local rc_fileref fileref did dnum cntfiles rc_dcclose;
+
+   * Allocate the directory to a fileref *;
+   %let rc_fileref = %sysfunc(filename(fileref,&dir));
+   * Verify that the allocation was succesful *;
+   %if %sysfunc(fexist(&fileref))  %then %do;
+      %put NOTE: The directory "&dir" exists;
+
+      * Open the directory so you can reference it with the did handle *;
+      %let did=%sysfunc(dopen(&fileref));
+
+      * Determine the number of members in a directory *;
+      %let dnum=%sysfunc(dnum(&did));
+      %put NOTE: &dnum files or directies found in "&dir";
+      %global &maccnt;
+      %let &maccnt=&dnum;
+
+      * Loop over the number of members in a directory *;
+      %do i=1 %to &dnum;
+         %let dread=%sysfunc(dread(&did,&i));
+         %global &macvar&i;
+         %let &macvar&i=&dread;
+      %end;
+
+      * Close the directory handle *;
+      %let rc_dcclose=%sysfunc(dclose(&did));
+
+   %end;
+   %else
+     %do;
+       %put NOTE: The directory "&dir" could not be allocated.;
+       %put NOTE: Macro DirContent will now exit;
+   %end;
+   * Deallocate the file reference *;
+   %let rc_filename=%sysfunc(filename(fileref));
+%mend;
