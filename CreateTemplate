@@ -2,12 +2,13 @@
 * Program:CreateTemplate                                                              *;
 * GitHub :https://github.com/p1kos/SASTIP/blob/master/CreateTemplate                  *;
 * Purpose:Create a Template table that contains all the variable names that you expect*;
-* Usage  :%CreateTemplate(work,myTemplate,%quote(var1,var2,var3,var4,var5)            *;
+* Usage  :%CreateTemplate(work,myTemplate,%quote(var1,var2,var3),%quote(num,,char)    *;
 * &lib   :specify the SAS library to save the template to                             *;
 * &ds    :Specify the SAS table name to create                                        *;
 * &var   :List of variables to create separated by commax                             *;
+* &type  :List type char or num or blank for the variables you know the type of       *;
 ***************************************************************************************;
-%macro CreateTemplate(lib,ds,var);
+%macro CreateTemplate(lib,ds,var,type);
    * Get the current quotelenmax option *;
    %let StoreOptionQuoteLenmax=%sysfunc(getoption(QuoteLenMax));
    %put &=StoreOptionQuoteLenmax;
@@ -16,10 +17,19 @@
    options NoQuoteLenMax;
    * Create table with variable names *;
    data &lib..&ds.;
-   length NAME $32.;
-   numVars=countw("&var.",',');
+   length NAME $32. TYPE $4;
+   * How many variables are there? *;
+   inVar="&var.";
+   numVars=countw(inVar,',');
+   * How many type values are there? *;
+   inType="&type.";
+   numTypes=countw(inType,',');
    do VARNUM = 1 to numVars;
-      NAME=scan("&var.",VARNUM,',');
+      NAME=scan(inVar,VARNUM,',');
+      if VARNUM <= numTypes then 
+      TYPE=scan(intype,VARNUM,',');
+
+      drop inVar inType numVars numTypes;
       output;
    end;
    run;
