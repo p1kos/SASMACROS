@@ -9,7 +9,7 @@
 ***************************************************************************************;
 
 %MACRO nobs(tabl, macvar);
-    %GLOBAL dsid value rc;
+    %LOCAL dsid value rc;
     %LET dsid=%SYSFUNC(OPEN(&tabl,IS));
 
     %IF &dsid %then
