@@ -1,0 +1,27 @@
+***************************************************************************************;
+* Program: Nvar                                                                       *;
+* GitHub : https://github.com/p1kos/SASTIP/blob/master/Nvar                           *;
+* Purpose: Determine the number of variables in a SAS dataaset                        *;
+* &tabL  : The table/dataset of which you want the number of variables                *;
+* Usage  : %Nvar(sashelp.cars,myobs)                                                  *;
+*        : %let myobs=%Nvar(sashelp.cars)                                             *;
+* Credit : Thanks to a paper by Russ Tyndall                                          *;
+***************************************************************************************;
+
+%MACRO Nvar(tabl, macvar);
+    %LOCAL dsid value rc;
+    %LET dsid=%SYSFUNC(OPEN(&tabl,IS));
+
+    %IF &dsid %THEN
+        %DO;
+            %LET value=%SYSFUNC(ATTRN(&dsid,Nvar));
+            %LET rc   =%SYSFUNC(CLOSE(&dsid));
+        %END;
+
+    %IF &macvar NE %THEN
+        %DO;
+            %GLOBAL &macvar;
+            %LET &macvar=&value;
+        %END;
+    %ELSE &value.;
+%MEND;
