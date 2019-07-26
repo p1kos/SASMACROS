@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program:DirFiles                                                                    *;
-* GitHub :https://github.com/p1kos/SASTIP/blob/master/DirFiles                        *;
+* GitHub :https://github.com/p1kos/SASMACROS/blob/master/DirFiles                     *;
 * Purpose:Retrieve the list of files or directories in a directory.                   *;
 *        :Does not need PIPE or X command authorization.                              *;
 * Usage  :%DirFiles(/data/Personal Folders/Pieter/lev1)                               *;
