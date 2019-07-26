@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program:ChkDir                                                                      *;
-* GitHub :https://github.com/p1kos/SASTIP/blob/master/ChkDir                          *;
+* GitHub :https://github.com/p1kos/SASMACROS/blob/master/ChkDir                          *;
 * Purpose:Check to see if a directory is created. If not then create the directory.   *;
 *        :This only works for single level directories                                *;
 * Usage  :%chkdir(/data/Personal Folders/Pieter/lev1)                                 *;
