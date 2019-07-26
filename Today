@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program:Today                                                                       *;
-* GitHub : https://github.com/p1kos/SASTIP/edit/master/Today                          *;
+* GitHub : https://github.com/p1kos/SASMACROS/edit/master/Today                       *;
 * Credit :Thanks to Mark Jordan - http://go.sas.com/jedi for the base code            *;
 * Purpose:Retrieve the current date at moment it is called. Not the &SYSDATE value.   *;
 *        :Display this retrieved date in a desired SAS date format.                   *;
