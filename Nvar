@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: Nvar                                                                       *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/Nvar                           *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/Nvar                        *;
 * Purpose: Determine the number of variables in a SAS dataaset                        *;
 * &tabL  : The table/dataset of which you want the number of variables                *;
 * Usage  : %Nvar(sashelp.cars,myobs)                                                  *;
