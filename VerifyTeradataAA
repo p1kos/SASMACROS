@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: verifyTeradataAA                                                           *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/verifyTeradataAA               *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/verifyTeradataAA            *;
 * Purpose: Verify that the SAS Analytics Accelerator for Teradata is functioning.     *;
 *        : It is assumed that you have read access to the DBC database on Teradata.   *;
 * Usage  :%verifyTeradataAA(server=prod,user=&user,Psw=&pwd_password)                 *;
