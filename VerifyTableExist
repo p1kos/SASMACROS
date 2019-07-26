@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program:VerifyTableExist                                                            *;
-* GitHub :https://github.com/p1kos/SASTIP/blob/master/VerifyTableExist                *;
+* GitHub :https://github.com/p1kos/SASMACROS/blob/master/VerifyTableExist                *;
 * Purpose:Verifies the existence of data set and create a macro variable if requested *;
 * dsname :Input table name you want to check                                          *;
 * macvar :(Optional) Specify a macro variable you want to create                      *;
