@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Macro  : MaxLen                                                                     *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/MaxLen                         *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/MaxLen                      *;
 * Purpose: Determine the maximum content of a character variable and store that value *;
 *        : in a global macro variable MaxLen                                          *;
 * &Tabl  : The table to query                                                         *;
