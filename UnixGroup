@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: UnixGroup                                                                  *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/UnixGroup                      *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/UnixGroup                   *;
 * Purpose: Change the Unix group of a directory from the default readonly to another  *;
 *        : group. In this way other people in that group can access this directory.   *;
 * Usage  : %unixGroup(dir=/data/Pieter/unixGroup                                      *;
