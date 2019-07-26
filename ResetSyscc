@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Macro    : ResetSyscc                                                               *;
-* GitHub   : https://github.com/p1kos/SASTIP/blob/master/DeleteCube                   *;
+* GitHub   : https://github.com/p1kos/SASMACROS/blob/master/DeleteCube                *;
 * Purpose  : Reset the general system error code. This macro variable is used to      *;
 *          : verify if a program should be run at all. It is important that this      *;
 *          : macro resets the error code if needed.                                   *;
