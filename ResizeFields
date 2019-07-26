@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: ResizeFields                                                               *;
-* GitHub : https://github.com/p1kos/SASTIP/edit/master/ResizeFields                   *;
+* GitHub : https://github.com/p1kos/SASMACROS/edit/master/ResizeFields                *;
 * Purpose:Change character fields to the maximum needed length.                       *;
 * Usage  :%ResizeFields(BronData=sashelp.cars,DoelData=work.cars);                    *;
 * &BronData:Input Table to analyze                                                    *;
