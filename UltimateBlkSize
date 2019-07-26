@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: UltimateBlksize                                                            *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/UltimateBlkSize                *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/UltimateBlkSize             *;
 * Purpose: Determine the ulimate blocksize to be used on a 3390 DASD (direct access   *;
 *        : storage device) on a z-series (mainframe /OS390) machine.                  *;
 *        : The goal is to utilize one track optimally by defining a blocksize that is *;
