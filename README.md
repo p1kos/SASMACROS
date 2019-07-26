@@ -1,4 +1,4 @@
-SASTIP
+SASMACROS
 ======
 
-Collection of SAS (Institute) code for general use. 
+Collection of SAS (Institute) macros for general use. 
