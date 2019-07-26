@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: FmtLibs                                                                    *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/FmtLibs                        *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/FmtLibs                     *;
 * Purpose: Determine the SASLIBS in the FMTSEARCH path and store it in the fmtlibs    *;
 *        : global macro variable.                                                     *;
 * &macvar: Macro variable to create. Default value=fmtlibs                            *;
