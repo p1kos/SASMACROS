@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Macro    :VarType                                                                   *;
-* GitHub   :https://github.com/p1kos/SASMACROS/edit/master/VarType                       *;
+* GitHub   :https://github.com/p1kos/SASMACROS/edit/master/VarType                    *;
 * Purpose  :Return the type of variable in a dataset.                                 *;
 *          :N for numeric and C for character                                         *;
 * Parameters                                                                          *;
