@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program:CreateTemplate                                                              *;
-* GitHub :https://github.com/p1kos/SASTIP/blob/master/CreateTemplate                  *;
+* GitHub :https://github.com/p1kos/SASMACROS/blob/master/CreateTemplate               *;
 * Purpose:Create a Template table that contains all the variable names that you expect*;
 * Usage  :%CreateTemplate(work,myTemplate,%quote(var1,var2,var3),%quote(num,,char)    *;
 * &lib   :specify the SAS library to save the template to                             *;
