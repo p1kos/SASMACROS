@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: verifyTeradataFastExport                                                   *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/verifyTeradataFastExport       *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/verifyTeradataFastExport    *;
 * Purpose: Verify that the SAS Access to Teradata (FastExport) are functioning.       *;
 *        : It is assumed that you have read access to the DBC database on Teradata.   *;
 * Usage  :%verifyTeradataAA(server=prod,user=&user,Psw=&pwd_password)                 *;
