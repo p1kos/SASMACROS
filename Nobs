@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: Nobs                                                                       *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/NOBS                           *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/NOBS                        *;
 * Purpose: Determine the number of observations in a SAS dataaset                     *;
 * &tabL  : The table/dataset of which you want the number of observations             *;
 * Usage  : %nobs(sashelp.cars,myobs)                                                  *;
