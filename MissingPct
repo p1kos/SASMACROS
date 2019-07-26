@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: MissingPct                                                                 *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/MissingPct                     *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/MissingPct                  *;
 * Purpose:Determine the missing percentage of each variable in the input table.       *;
 *        :Create a output table with the exact same variables as the input.           *;
 *        :The variables are however percentages that indicate how many missing        *;
