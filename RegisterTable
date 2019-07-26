@@ -1,6 +1,6 @@
 ***************************************************************************************;
 * Program: RegisterTable                                                              *;
-* GitHub : https://github.com/p1kos/SASTIP/blob/master/RegisterTable                  *;
+* GitHub : https://github.com/p1kos/SASMACROS/blob/master/RegisterTable               *;
 * Purpose: Register Table in Metadata Server. This may be needed depending on the     *;
 *        : setup of you site                                                          *;
 * &lib   : Library name                                                               *;
