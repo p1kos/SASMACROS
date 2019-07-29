@@ -1,0 +1,97 @@
+***************************************************************************************;
+* Program: OverlappingPeriods                                                         *;
+* Purpose: Determine if there are overlapping periods in a dataset on a specific key  *;
+*        : combination.                                                               *;
+* Usage  :%OverlappingPeriods(periods,tmp,key1 key2,startdate,enddate)                *;
+***************************************************************************************;
+%macro OverlappingPeriods(InDataset	/*Input dataset*/
+						 ,OutDataset/*Output dataset*/
+						 ,Keys		/*List the one or multiple keys for this dataset with spaces in between them*/
+						 ,StartDate	/*Variable containing the StartDate*/
+						 ,EndDate	/*Variable containing the EndDate*/
+						 ,OverLappingPeriodInd=OverLappingPeriodInd/*Indicator that shows if it is a overlapping period record*/
+						 );
+
+	%*Extract the last key from the Keys list *;
+	%let NrKeys=%sysfunc(countw(&Keys),' ');
+	%put &=NrKeys;
+	%let LastKey=%scan(&Keys,&NrKeys.,%str( ));
+	%put &=LastKey;
+
+	* Create a new field _endDate to make sure we do not have any open ended periods. *;
+	data &OutDataset.;
+		set &InDataset.;
+		* If it is a open ended date then we set it to 31 December 9999 *;
+		_endDate = coalesce(&EndDate.,'31DEC9999'D);
+		format _endDate date9.;
+	run;
+
+	%*****************************************;
+	%* First we check it on descending order *;
+	%*****************************************;
+	proc sort data=_last_;
+		by &Keys. descending &StartDate. descending _endDate;
+	run;
+
+	data &OutDataset.;
+		retain _prevStartDate;
+		set &OutDataset.;
+
+		format _prevStartDate date9.;
+		%* Specify the sort sequence of the data *;
+		by &Keys. descending &StartDate. descending _endDate;
+
+		%* Is it the first in the key combination *;
+		if first.&LastKey. then do;
+			%* For the first occurence we do not test for overlapping periods. *;
+			&OverLappingPeriodInd.=0;
+			%* Store the first start date so that we can use it in the second record *;
+			_prevStartDate = &StartDate.;
+			
+			put _all_;
+		end;
+		else do;
+			%* For the 2nd record and beyond we compare it with the previous record  *;
+			%* If the current EndDate is after the previous StartDate then we have   *;
+			%* overlapping periods                                                   *;
+			&OverLappingPeriodInd.=(_endDate gt _prevStartDate);
+			put _all_;
+			_prevStartDate = &StartDate.;
+		end;
+		drop _prevStartDate;
+	run;
+
+	%************************************;
+	%* Then check it on ascending order *;
+	%************************************;
+	proc sort data=_last_;
+		by &Keys. &StartDate. _endDate;
+	run;
+
+	data &OutDataset.;
+		retain _prevEndDate;
+		set &OutDataset.;
+
+		format _endDate date9. _prevEndDate date9.;
+		%* Specify the sort sequence of the data *;
+		by &Keys. &StartDate. _endDate;
+
+		%* Is it the first in key combination *;
+		if first.&LastKey. then do;
+			%* For the first occurence we do not test for overlapping periods. *;
+			if &OverLappingPeriodInd. ne 1 then &OverLappingPeriodInd.=0;
+			%* Store the first end date so that we can use it in the second record *;
+			_prevEndDate = _endDate;
+		end;
+		else do;
+			%* For the 2nd record and beyond we test to see if the previous end date *;
+		    %* If the current Start Date is before the previous end date then we     *;
+		    %* have overlapping periods                                              *;
+			%* But only check this is it has not been indicated as overlapping in    *;
+			%* the previous check                                                    *;
+			if &OverLappingPeriodInd. ne 1 then &OverLappingPeriodInd.=(startdate lt _prevEndDate);
+			_prevEndDate = _endDate;
+		end;
+		drop _prevEndDate _endDate;
+	run;
+%mend;
